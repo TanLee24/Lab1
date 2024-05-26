@@ -1,0 +1,193 @@
+1.Một chuỗi được gọi là palindrome nếu chuỗi đó giống với chuỗi được đảo ngược từ chính nó. Ví dụ: “eye”, “noon”, “abcba”...
+
+Hãy viết hàm kiểm tra xem một chuỗi có là palindrome hay không?
+
+Đầu vào:
+
+const char* str: chuỗi cần kiểm tra palindrome. str chỉ bao gồm chữ cái thường Đầu ra:
+
+bool: true nếu chuỗi str là palindrome, ngược lại false
+
+2.Một số tự nhiên n được gọi là đặc biệt khi và chỉ khi n là số nguyên tố và tổng các chữ số của n cũng là số nguyên tố. Viết hàm kiểm tra một số tự nhiên có đặc biệt hay không.
+
+Đầu vào:
+
+int n: số tự nhiên cần kiểm tra có phải số đặc biệt không Đầu ra:
+
+bool: trả về true nếu n là số đặc biệt, ngược lại trả về false
+
+3.Thời gian còn lại 11:34:04 Câu hỏi 3 Đúng Đặt cờ Đoạn văn câu hỏi
+
+[Tiếng Việt]
+
+Viết một hàm mã hóa và một hàm giải mã một đoạn text theo phương pháp Caesar Cipher. Để mã hoá và giải mã một chuỗi ký tự text, ta cần một tham số có giá trị nguyên là shift.
+
+Hàm mã hóa (tên encrypt) sẽ thay đổi từng chữ cái trong text bằng cách dịch chuyển chữ cái đó sang phải shift lần trong bảng chữ cái. Ví dụ với shift = 3. Khi đó 'a' được mã hoá thành 'd', 'b' được mã hoá thành 'e',... 'z' được mã hoá thành 'c'.
+
+Hàm giải mã (tên decrypt) sẽ nhận một chuỗi ký tự text và giá trị nguyên shift và giải mã chuỗi ký tự này thành chuỗi ban đầu (tức dịch chuyển từng chữ cái sang trái shift lần trong bảng chữ cái)
+
+Đầu vào:
+
+char* text: chuỗi ký tự cần được mã hoá hoặc giải mã, chỉ bao gồm chữ cái thường và hoa int shift: giá trị dịch chuyển trong Caesar Cipher Đầu ra:
+
+Hàm không trả về. Chuỗi ký tự truyền vào text sẽ thay đổi trực tiếp trong hàm.
+
+4.Viết hàm kiểm tra các phần tử trong mảng có duy nhất hay không
+
+Đầu vào:
+
+int* arr: mảng số tự nhiên int n: số lượng phần tử trong mảng Đầu ra:
+
+bool: trả về true nếu các phần tử trong mảng là duy nhất, ngược lại trả về false Chú ý: arr[i] nằm trong khoảng từ [0, 1000]
+
+5.Cho một số thập phân dương làm đầu vào, chúng ta cần triển khai hàm
+
+long int decimalToBinary(int decimal_number){}
+
+để chuyển đổi số thập phân dương đã cho thành số nhị phân tương đương.
+
+Xin lưu ý rằng bạn không thể sử dụng từ khóa for, while, goto (ngay cả trong tên biến, comment).
+
+Đối với bài tập này, chúng ta có #include và sử dụng namespace std;
+
+CODE:
+
+CAU 1:
+#include<cstring>
+bool isPalindrome(const char* str) {
+    int len = strlen(str); // Lấy độ dài của chuỗi
+    int left = 0;
+    int right = len - 1;
+
+    while (left < right) {
+        if (str[left] != str[right]) {
+            return false; // Nếu ký tự tại vị trí left và right không trùng nhau, không phải palindrome
+        }
+        left++;
+        right--;
+    }
+    return true; // Nếu kiểm tra hết và các ký tự đều trùng nhau, là palindrome
+}
+
+CAU 2:
+#include<cmath>
+bool isPrime(int n)
+{
+    if (n <= 1)
+    {
+        return false;
+    }
+
+    int sqrtN = sqrt(n);
+    for (int i = 2; i <= sqrtN; ++i)
+    {
+        if (n % i == 0)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool isSpecialNumber(int n)
+{
+    if (!isPrime(n))
+    {
+        return false;
+    }
+
+    int digitSum = 0;
+    int temp = n;
+    while (temp > 0)
+    {
+        digitSum += temp % 10;
+        temp /= 10;
+    }
+
+    return isPrime(digitSum);
+}
+
+CAU 3:
+void encrypt(char* text, int shift) {
+    for (int i = 0; text[i] != '\0'; ++i) {
+        // Kiểm tra xem ký tự có phải là chữ cái không
+        if (isalpha(text[i])) {
+            // Xác định biên giới của bảng chữ cái (65 - 90: A-Z, 97 - 122: a-z)
+            int base = isupper(text[i]) ? 65 : 97;
+            // Áp dụng phép dịch chuyển và chuẩn hóa giá trị
+            text[i] = (text[i] - base + shift) % 26 + base;
+        }
+    }
+}
+
+// Hàm giải mã văn bản theo phương pháp Caesar Cipher
+void decrypt(char* text, int shift) {
+    for (int i = 0; text[i] != '\0'; ++i) {
+        // Kiểm tra xem ký tự có phải là chữ cái không
+        if (isalpha(text[i])) {
+            // Xác định biên giới của bảng chữ cái (65 - 90: A-Z, 97 - 122: a-z)
+            int base = isupper(text[i]) ? 90 : 122;
+            // Áp dụng phép dịch chuyển và chuẩn hóa giá trị
+            text[i] = (text[i] - base - shift) % 26 + base;
+        }
+    }
+}
+
+CAU 4:
+#include <iostream>
+#include <cstring>
+
+
+bool checkElementsUniqueness(int* arr, int n) {
+    if (n <= 1) return true; // Nếu mảng có 0 hoặc 1 phần tử, tất cả phần tử đều duy nhất
+
+    bool seen[1001]; // Mảng phụ trợ để theo dõi sự xuất hiện của các phần tử
+    memset(seen, false, sizeof(seen)); // Khởi tạo tất cả các phần tử của seen là false
+
+    for (int i = 0; i < n; ++i) {
+        if (seen[arr[i]]) {
+            return false; // Nếu phần tử đã xuất hiện trước đó, trả về false
+        }
+        seen[arr[i]] = true; // Đánh dấu phần tử đã xuất hiện
+    }
+
+    return true; // Nếu không có phần tử nào xuất hiện hơn 1 lần, trả về true
+}
+
+CAU 5:
+#include <iostream>
+#include <string>
+
+long int decimalToBinary(int decimal_number)
+{
+    if (decimal_number <= 0)
+    {
+        return 0; // Trường hợp cơ sở: số thập phân là 0 hoặc âm
+    }
+
+    return decimal_number % 2 + 10 * decimalToBinary(decimal_number / 2);
+}
+
+CAU 6:
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <algorithm>
+int numberOfDiffCharac(string str) {
+    bool seen[26]; // Mảng phụ trợ để theo dõi sự xuất hiện của các ký tự
+    memset(seen, false, sizeof(seen)); // Khởi tạo tất cả các phần tử của seen là false
+
+    for (char ch : str) {
+        seen[ch - 'a'] = true; // Đánh dấu ký tự đã xuất hiện
+    }
+
+    int count = 0;
+    for (bool b : seen) {
+        if (b) {
+            count++; // Đếm số ký tự phân biệt
+        }
+    }
+
+    return count;
+}
