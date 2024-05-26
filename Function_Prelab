@@ -1,0 +1,170 @@
+CAU 1:
+Hiện thực hàm tính giai thừa của số N, sau đó gọi hàm vừa hiện thực trong hàm main để gán kết quả tính được vào biến result.
+
+Đầu vào: 
+
+int N: số tự nhiên N
+CODE:
+int CalFactorial(int n)
+{
+    int p = 1;
+    for (int i = n; i > 0; i--)
+    {
+        p *= i;
+    }
+    return p;
+}
+
+CAU 2: // CÂU NÀY KO LIÊN QUAN ĐẾN HÀM 
+Viết chương trình theo cấu trúc OOP để tiến hành đổi chỗ các cặp giá trị liên tiếp nhau trong danh sách liên kết.
+
+Sinh viên được yêu cầu hiện thực phần TODO của các hàm đã cho, không được tự ý điều chỉnh mã nguồn khởi tạo của chương trình.
+
+Đầu vào:
+
+n: độ dài của mảng
+
+arr: mảng các giá trị trong linked list ban đầu
+
+Đầu ra:
+
+Tiến hành in ra màn hình danh sách liên kết sau khi chuyển đổi.
+
+Mô tả chức năng các hàm:
+
+swap: có chức năng đổi chỗ các cặp trong danh sách liên kết ban đầu, nhận đầu vào là địa chỉ head của danh sách liên kết ban đầu, trả về địa chỉ head của danh sách liên kết sau khi đã chuyển đổi.
+createList: nhận đầu vào là mảng các giá trị khởi tạo và biến n là số lượng các phần tử của mảng, trả về địa chỉ con trỏ head của danh sách liên kết sau khi khởi tạo.
+printList: nhận đầu vào là địa chỉ head của danh sách liên kết, in ra màn hình giá trị của các node trong danh sách liên kết.
+CODE:
+#include <iostream>
+
+using namespace std;
+
+// YOU ARE NOT ALLOWED TO MODIFY INITIAL CODE, ONLY CODE IN TODO
+class Node {
+    int val;
+    Node* next;
+
+   public:
+    Node() : val(0), next(nullptr) {}
+    Node(int x) {
+        // TO DO
+        this->val = x;
+        this->next = nullptr;
+    }
+    Node(int x, Node* next) {
+        // TO DO
+        this->val = x;
+        this->next = next;
+    }
+    int getVal() {
+        // TO DO
+        return val;
+    }
+    Node* getNext() {
+        // TO DO
+        return next;
+    }
+    void setVal(int x) {
+        // TO DO
+        this->val = x;
+    }
+    void setNext(Node* next) {
+        // TO DO
+        this->next = next;
+    }
+};
+class ListNode {
+public:
+    Node* swap(Node* head) {
+        // TO DO
+        if (!head || !head->getNext()) return head;
+
+        Node* newHead = head->getNext();
+        Node* prev = nullptr;
+        Node* current = head;
+
+        while (current && current->getNext()) {
+            Node* nextPair = current->getNext()->getNext();
+            Node* second = current->getNext();
+
+            second->setNext(current);
+            current->setNext(nextPair);
+
+            if (prev) {
+                prev->setNext(second);
+            }
+
+            prev = current;
+            current = nextPair;
+        }
+
+        return newHead;
+    }
+
+    Node* createList(int arr[], int n) {
+        // TO DO
+        if (n == 0) return nullptr;
+
+        Node* head = new Node(arr[0]);
+        Node* current = head;
+
+        for (int i = 1; i < n; ++i) {
+            current->setNext(new Node(arr[i]));
+            current = current->getNext();
+        }
+
+        return head;
+    }
+
+    void printList(Node* head) {
+        // TO DO
+        Node* current = head;
+        while (current) {
+            cout << current->getVal() << " ";
+            current = current->getNext();
+        }
+        cout << endl;
+    }
+};
+
+CAU 3:
+Viết hàm sum2 để tính tổng giá trị các phần tử trong mảng số nguyên.
+
+Tham số:
+
+int* array: mảng số nguyên
+int size: số phần tử trong mảng
+int& result: tham số để lưu kết quả cuối cùng sau khi tính toán
+CODE:
+void sum2(int* array, int numEls, int& result) {
+    result = 0; // Khởi tạo kết quả ban đầu là 0
+    for (int i = 0; i < numEls; ++i) {
+        result += array[i]; // Cộng dồn các phần tử trong mảng vào result
+    }
+}
+
+CAU 4:
+Viết hàm bool completeNum(int N) để kiểm tra xem số nguyên dương N có phải là một số hoàn thiện hay không. N là một số hoàn thiện nếu N bằng tổng tất cả ước số nguyên dương (không bao gồm chính nó) của nó.
+
+Đầu vào: 
+
+int N: số nguyên dương N cần kiểm tra
+Đầu ra:
+
+bool: trả về true nếu N là số hoàn thiện, ngược lại trả về false
+CODE:
+bool completeNum(int N) {
+    if (N <= 1) return false; 
+
+    int sum = 1; 
+
+    for (int i = 2; i * i <= N; ++i) {
+        if (N % i == 0) {
+            sum += i;
+            if (i != N / i) sum += N / i; 
+        }
+    }
+
+    return sum == N; 
+}
