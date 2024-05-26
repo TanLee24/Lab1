@@ -1,0 +1,156 @@
+CAU 1:
+Viết hàm int find(char str[], char substr[]) để tìm vị trí của chuỗi con trong một chuỗi cho trước. Hàm trả về vị trí đầu tiên của chuỗi con trong chuỗi ban đầu. Nếu không tìm thấy chuỗi con, hàm trả về -1.
+
+- Mô tả hàm: Hàm này thực hiện việc tìm kiếm chuỗi con trong chuỗi ban đầu và trả về vị trí đầu tiên của chuỗi con nếu được tìm thấy. Nếu không tìm thấy, hàm trả về -1.
+
+- Đầu vào: 
+
+char str[]: Mảng kí tự chứa chuỗi ban đầu.
+
+char substr[]: Mảng kí tự chứa chuỗi con cần tìm.
+
+- Đầu ra:
+
+int: Vị trí đầu tiên của chuỗi con trong chuỗi ban đầu. Nếu không tìm thấy, trả về -1.
+
+- Các thư viện có thể dùng: <iostream>, <cstring>
+
+- Note: Sinh viên không được sử dụng các từ khoá sau trong đoạn code nộp bài, kể cả trong comment: "include", "string"
+Tham số truyền vào: 
+
+CODE:
+int find(char str[], char substr[]) {
+    // TODO
+    int strLen = 0;
+    int substrLen = 0;
+
+    while (str[strLen] != '\0') {
+        strLen++;
+    }
+
+    
+    while (substr[substrLen] != '\0') {
+        substrLen++;
+    }
+
+    
+    for (int i = 0; i <= strLen - substrLen; ++i) {
+        bool found = true;
+        
+        for (int j = 0; j < substrLen; ++j) {
+            if (str[i + j] != substr[j]) {
+                found = false;
+                break;
+            }
+        }
+        if (found) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+CAU 2:
+Viết hàm void printFirstRepeatedWord(char str[]) in ra từ đầu tiên trong chuỗi bị lặp lại. Từ bị lặp lại trong một chuỗi là từ mà từ vị trí của nó trở về phía trước có xuất hiện một từ giống với nó.
+- Đầu vào:
+
+Mảng kí tự chứa chuỗi
+
+- Đầu ra:
+
+In ra từ đầu tiên trong chuỗi có lặp lại. Nếu không có từ nào lặp lại thì in ra "No Repetition"
+
+- Các thư viện có thể dùng: <iostream>, <cstring>
+
+- Note: Sinh viên không được sử dụng các từ khoá sau trong đoạn code nộp bài, kể cả trong comment: "include", "string". Mỗi từ trong chuỗi có không quá 30 ký tự.
+CODE:
+
+void printFirstRepeatedWord(char str[]) {
+    const int MAX_WORDS = 100;
+    const int MAX_WORD_LENGTH = 30;
+
+    char words[MAX_WORDS][MAX_WORD_LENGTH];
+    int wordCount = 0;
+
+    char* token = std::strtok(str, " ");
+    while (token != nullptr) {
+        bool repeated = false;
+
+        for (int i = 0; i < wordCount; i++) {
+            if (std::strcmp(words[i], token) == 0) {
+                repeated = true;
+                std::cout << token;
+                break;
+            }
+        }
+
+        if (repeated) {
+            break;
+        }
+
+        std::strcpy(words[wordCount], token);
+        wordCount++;
+
+        token = std::strtok(nullptr, " ");
+    }
+
+    if (!token) {
+        std::cout << "No Repetition";
+    }
+}
+
+CAU 3:
+Viết hàm void process(const char str[], char outstr[]) loại bỏ các khoảng trắng thừa trong chuỗi sao cho không còn hai khoảng trắng liền kề nhau và không có khoảng trắng nào ở đầu và cuối chuỗi.
+
+- Đầu vào:
+
+Mảng kí tự chứa chuỗi cần loại bỏ khoảng trắng
+
+- Đầu ra:
+
+Kết quả của bài toán được ghi vào chuỗi outstr
+
+- Các thư viện có thể dùng: <iostream>, <cstring>
+
+- Note: Sinh viên không được sử dụng các từ khoá sau trong đoạn code nộp bài, kể cả trong comment: "include", "string"
+CODE:
+void process(const char str[], char outstr[]) {
+    int len = strlen(str);
+    int index = 0;
+    bool space = true;
+
+    for (int i = 0; i < len; i++) {
+        if (str[i] == ' ') {
+            space = true;
+        }
+        else {
+            if (space) {
+                outstr[index++] = ' ';
+                space = false;
+            }
+            outstr[index++] = str[i];
+        }
+    }
+
+    // Xóa khoảng trắng cuối chuỗi (nếu có)
+    if (index > 0 && outstr[index - 1] == ' ') {
+        index--;
+    }
+
+    outstr[index] = '\0';
+
+    // Xóa khoảng trắng ở đầu chuỗi (nếu có)
+    int start = 0;
+    while (outstr[start] == ' ') {
+        start++;
+    }
+
+    if (start > 0) {
+        len = strlen(outstr);
+        for (int i = 0; i <= len - start; i++) {
+            outstr[i] = outstr[i + start];
+        }
+        outstr[len - start] = '\0';
+    }
+}
