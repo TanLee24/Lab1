@@ -1,0 +1,64 @@
+CAU 1:
+Cho mảng 2 chiều chứa các số nguyên, kích thước M x N.
+
+Hiện thực hàm:
+
+int ascendingRows(int arr[][1000], int row, int col);
+Trong đó; arr, row và col lần lượt là mảng 2 chiều, số hàng và số cột của mảng. Một hàng trong mảng được gọi là HN1 nếu trong hàng đó, mỗi phần tử đều có giá trị không lớn hơn các phần tử đứng sau nó. Tìm số hàng HN1 có trong mảng.
+
+Ghi chú: (Các) thư viện iostream, và string đã được khai báo, và namespace std đã được sử dụng.
+CODE:
+int ascendingRows(int arr[][1000], int row, int col) {
+    int count = 0;
+for (int i = 0; i < row; i++)
+{
+	bool HN1 = true;
+	for (int j = 0; j < col - 1; j++)
+	{
+		if (arr[i][j] > arr[i][j + 1])
+		{
+			HN1 = false;
+			break;
+		}
+	}
+	if (HN1) count++;
+}
+return count;
+
+}
+
+CAU 2:
+Cho mảng 2 chiều chứa các số nguyên, kích thước M x N.
+
+Hiện thực hàm:
+
+int primeColumns(int arr[][1000], int row, int col);
+Trong đó; arr, row và col lần lượt là mảng 2 chiều, số hàng và số cột của mảng. Một cột của mảng được gọi là HN2 nếu tổng tất cả các phần tử trong cột đó là số nguyên tố. Tìm số cột HN2 có trong mảng.
+
+Ghi chú: (Các) thư viện iostream, vector và string đã được khai báo, và namespace std đã được sử dụng.
+CODE:
+bool checkprime(int num) {
+    if (num <= 1) return false;
+    for (int i = 2; i * i <= num; ++i) {
+        if (num % i == 0) return false;
+    }
+    return true;
+}
+
+int primeColumns(int arr[][1000], int row, int col) {
+    int count = 0; 
+
+    for (int j = 0; j < col; j++) {
+        int sum_y = 0; 
+
+        for (int i = 0; i < row; i++) {
+            sum_y += arr[i][j];
+        }
+
+        if (checkprime(sum_y)) {
+            count++; 
+        }
+    }
+
+    return count;
+}
