@@ -1,0 +1,29 @@
+CAU 1:
+Hiện thực hàm void replaceString(string s, string s1, string s2) để in ra chuỗi s sau khi đã thay thế  chuỗi con s1 cuối cùng thành s2 có trong s.
+
+Nếu không tìm thấy chuỗi s1 thì giữ nguyên chuỗi s và in ra.
+
+Gợi ý: Tham khảo hàm string::replace trong thư viện <string>.
+CODE:
+void replaceString(string s, string s1, string s2){
+    //TO DO
+    size_t pos = s.rfind(s1); 
+    if (pos != std::string::npos) { 
+        s.replace(pos, s1.length(), s2); 
+    }
+    cout << s << endl; 
+}
+
+CAU 2:
+Hiện thực hàm deleteWord(string s, string s1) với chức năng in ra chuỗi s sau khi xóa tất cả các chuỗi s1 có trong s.
+CODE:
+void deleteWord(std::string s, const std::string& s1) {
+    size_t pos = 0;
+
+    while ((pos = s.find(s1, pos)) != std::string::npos) { // Tìm vị trí xuất hiện đầu tiên của s1 trong s
+        s.erase(pos, s1.length()); // Xóa s1 tại vị trí pos
+    }
+
+    std::cout << s << std::endl; // In ra kết quả
+}
+
