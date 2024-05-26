@@ -1,0 +1,122 @@
+CAU 1:
+Viết hàm void uppercase(string output) để đọc vào chuỗi S từ bàn phím, sau đó chuyển tất các ký tự trong chuỗi S thành ký tự viết HOA và xuất kết quả ra file output.
+Chú ý: chỉ thay đổi các chữ cái in thường, các kí tự khác sẽ được giữ nguyên.
+Đầu vào:
+Biến "output" chứa tên file dùng để xuất kết quả.
+Đầu ra:
+Hàm đọc chuỗi S từ bàn phím và xử lý chuỗi như mô tả. Sau đó ghi chuỗi đã xử lý vào file có tên được chứa trong biến “output” (hàm không trả về kết quả).
+CODE:
+void uppercase(const std::string& output) {
+    std::string input;
+    std::getline(std::cin, input);
+
+    for (char& c : input) {
+        if (std::islower(c)) {
+            c = std::toupper(c);
+        }
+    }
+
+    std::ofstream outputFile(output);
+    if (outputFile.is_open()) {
+        outputFile << input;
+        outputFile.close();
+
+    }
+}
+
+CAU 2:
+Viết hàm void threeChars(string fileName) đọc vào các hàng từ một file có đuôi txt, mỗi hàng chứa một chuỗi có 3 kí tự. Xác định xem 3 ký tự trên mỗi hàng có đúng thứ tự bảng chữ cái (ASCII) hay không, nếu đúng xuất ra "true", ngược lại xuất ra "false". Chương trình sẽ lặp cho đến khi 3 ký tự đọc vào là "***".
+
+Đầu vào:
+
+Biến fileName là tên file chứa dữ liệu cần đọc vào.
+
+Đầu ra:
+
+"true" hoặc "false", theo sau bởi dấu xuống dòng, trừ trường hợp đọc vào "***" thì kết thúc chương trình.
+CODE:
+void threeChars(string fileName) {
+    ifstream file(fileName);
+    if (!file.is_open()) {
+        cerr << "Error opening file" << endl;
+        return;
+    }
+    
+    string line;
+    while (getline(file, line)) {
+        // Loại bỏ ký tự '\r' nếu tồn tại
+        if (!line.empty() && line[line.size() - 1] == '\r') {
+            line.erase(line.size() - 1);
+        }
+
+        // Kiểm tra độ dài của chuỗi
+        if (line.length() != 3) {
+            cerr << "Invalid input length: " << line << endl;
+            continue;
+        }
+        
+        // Nếu chuỗi là "***", kết thúc chương trình
+        if (line == "***") {
+            break;
+        }
+        
+        // Kiểm tra xem các ký tự có theo thứ tự bảng chữ cái (ASCII) hay không
+        if (line[0] <= line[1] && line[1] <= line[2]) {
+            cout << "true" << endl;
+        } else {
+            cout << "false" << endl;
+        }
+    }
+    
+    file.close();
+}
+
+
+CAU 3:
+Viết hàm void process(string fileName) đọc một file đuôi txt, dòng đầu gồm 2 số N và M cách nhau bởi 1 khoảng trắng.
+
+N dòng theo sau, mỗi dòng gồm M số thực cách nhau bởi 1 khoảng trắng.
+
+Trả về giá trị lớn nhất của mỗi dòng và giá trị lớn nhất trong tất cả các số.
+Các thư viện đã được include: iostream, fstream, string.
+
+Đầu vào:
+Biến "fileName" là tên file chứa dữ liệu đầu vào.
+
+Đầu ra:
+
+Giá trị lớn nhất của mỗi dòng và giá trị lớn nhất của tất cả các số, cách nhau bởi ký tự khoảng trắng.
+CODE:
+void process(string fileName)   {
+    ifstream inputfile(fileName);
+    int N,M;
+    inputfile>>N>>M;
+    if(M==0||N==0){
+        inputfile.close();
+        return;
+    }
+    if(inputfile.peek()==ifstream::traits_type::eof()){
+        inputfile.close();
+        return;
+    }
+    bool isFirstNumber=true;
+    double globalMax,currentMax;
+    for(int i=0;i<N;i++){
+        currentMax=0;
+        for(int j=0;j<M;j++){
+            double num;
+            inputfile>>num;
+            if(isFirstNumber||num>currentMax){
+                currentMax=num;
+                isFirstNumber=false;
+            }
+        }
+        cout<<currentMax<<" ";
+        if(i==0) isFirstNumber=true;
+        if(currentMax>globalMax||isFirstNumber){
+            globalMax=currentMax;
+        }
+        isFirstNumber=true;
+    }
+    cout<<globalMax;
+}
